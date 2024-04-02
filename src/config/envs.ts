@@ -7,6 +7,10 @@ const envsSchema = joi
     PORT: joi.number().required(),
     NATS_SERVERS: joi.array().items(joi.string()).required(),
     STRIPE_SECRET: joi.string().required(),
+    STRIPE_SUCCESS_URL: joi.string().required(),
+    STRIPE_CANCEL_URL: joi.string().required(),
+    STRIPE_ENDPOINT_SECRET: joi.string().required(),
+    STRIPE_ENDPOINT_SECRET_TESTING: joi.string(),
   })
   .unknown(true);
 
@@ -22,4 +26,8 @@ export const envs = {
   port: envVars.PORT,
   nats_servers: envVars.NATS_SERVERS,
   stripe_secret: envVars.STRIPE_SECRET,
+  stripe_success_url: envVars.STRIPE_SUCCESS_URL,
+  stripe_cancel_url: envVars.STRIPE_CANCEL_URL,
+  stripe_endpoint_secret: envVars.STRIPE_ENDPOINT_SECRET,
+  stripe_endpoint_secret_testing: envVars.STRIPE_ENDPOINT_SECRET_TESTING,
 };

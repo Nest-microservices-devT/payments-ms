@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { envs } from 'src/config';
-import Stripe from 'stripe';
-import { CreatePaymentSessionDto } from './dto';
 import { Request, Response } from 'express';
+import { Injectable } from '@nestjs/common';
+import Stripe from 'stripe';
+import { envs } from 'src/config';
+import { CreatePaymentSessionDto } from './dto';
 
 @Injectable()
 export class PaymentsService {
@@ -33,8 +33,8 @@ export class PaymentsService {
       },
       line_items: lineItems,
       mode: 'payment',
-      success_url: 'http://localhost:3003/payments/success',
-      cancel_url: 'http://ocalhost:3003/payments/cancelled',
+      success_url: envs.stripe_success_url,
+      cancel_url: envs.stripe_cancel_url,
     });
 
     return session;
@@ -44,11 +44,10 @@ export class PaymentsService {
     const sig = req.headers['stripe-signature'];
     let event: Stripe.Event;
     // Testing
-    // const endpointSecret =
-    //   'whsec_fec0d3ed12c961375f2947339ab4b8f7277e2a19c6f60ba13c28cffd2a67c961';
+    // const endpointSecret = envs.stripe_endpoint_secret_testing
 
     // Real
-    const endpointSecret = 'whsec_ZtJ4sX6KXEWUUtFBv4FBQ440AmW4ibGQ';
+    const endpointSecret = envs.stripe_endpoint_secret;
 
     try {
       event = this.stripe.webhooks.constructEvent(
