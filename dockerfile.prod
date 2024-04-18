@@ -20,7 +20,7 @@ RUN yarn build
 
 # Limpieza de modulos que no se usaran y dejar solo los necesarios
 RUN yarn add ci -f --only=production && yarn cache clean --force
-
+RUN npx prisma generate
 # Build image end
 FROM node:21-alpine3.19 AS prod
 WORKDIR /usr/src/app
